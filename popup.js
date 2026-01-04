@@ -95,13 +95,6 @@ function setupEventListeners() {
   elements.weatherToggle.addEventListener('change', () => saveState({ showWeather: elements.weatherToggle.checked }));
 
   // Wallpapers
-  elements.wallpaperCats.forEach(cat => {
-    cat.addEventListener('click', () => {
-      elements.wallpaperCats.forEach(c => c.classList.remove('active'));
-      cat.classList.add('active');
-      saveState({ wallpaperCategory: cat.dataset.category });
-    });
-  });
 
   elements.enableWallpaperBtn.addEventListener('click', async () => {
     await saveState({ backgroundType: 'wallpaper' });

@@ -199,14 +199,15 @@ async function loadWallpaper(settings) {
         return;
     }
 
-    // Fetch new wallpaper from Unsplash
+    // Use Picsum for CORS-friendly random images
     try {
-        const collectionId = WALLPAPER_COLLECTIONS[Math.floor(Math.random() * WALLPAPER_COLLECTIONS.length)];
-        const response = await fetch(`https://source.unsplash.com/collection/${collectionId}/1920x1080`);
+        // Random seed for variety
+        const seed = Math.floor(Math.random() * 1000);
+        const url = `https://picsum.photos/seed/${seed}/1920/1080`;
 
         const wallpaperData = {
-            url: response.url,
-            photographer: 'Unsplash',
+            url: url,
+            photographer: 'Picsum Photos',
             timestamp: Date.now()
         };
 
@@ -219,11 +220,15 @@ async function loadWallpaper(settings) {
 }
 
 function applyWallpaper(data) {
-    elements.wallpaper.src = data.url;
-    elements.wallpaper.onload = () => {
-        elements.wallpaper.classList.add('loaded');
-    };
-    elements.photographerName.innerHTML = `Photo by <a href="https://unsplash.com" target="_blank">${data.photographer}</a>`;
+    if (elements.wallpaper) {
+        elements.wallpaper.src = data.url;
+        elements.wallpaper.onload = () => {
+            elements.wallpaper.classList.add('loaded');
+        };
+    }
+    if (elements.photographerName) {
+        elements.photographerName.innerHTML = `Photo by <a href="https://picsum.photos" target="_blank">${data.photographer}</a>`;
+    }
 }
 
 function applyFallbackBackground(settings) {
