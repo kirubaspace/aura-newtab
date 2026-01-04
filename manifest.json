@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Aura - New Tab Vibes",
-  "version": "2.0.0",
-  "description": "Transform every new tab into your personal sanctuary. Stunning colors, gradients, weather, search & ambient particles. Your browser, your aura.",
-  "permissions": ["storage"],
+  "version": "3.0.0",
+  "description": "Your personal new tab sanctuary. Beautiful wallpapers, todo list, quotes, ambient sounds (rain, coffee shop, ocean), weather, customizable quick links, and focus mode.",
+  "permissions": [
+    "storage"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
