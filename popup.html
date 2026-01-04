@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="auraGlow" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+                <stop offset="0%" stop-color="#FF9A9E"/>
+                <stop offset="50%" stop-color="#4ECDC4"/>
+                <stop offset="100%" stop-color="#45B7D1"/>
+              </radialGradient>
+              <radialGradient id="auraCore" cx="50%" cy="50%" r="50%" fx="40%" fy="40%">
+                <stop offset="0%" stop-color="#FFECD2"/>
+                <stop offset="100%" stop-color="#FCB69F"/>
+              </radialGradient>
+            </defs>
+            <circle cx="14" cy="14" r="12" fill="url(#auraGlow)" opacity="0.6"/>
+            <circle cx="14" cy="14" r="9" fill="url(#auraGlow)"/>
+            <circle cx="14" cy="14" r="5" fill="url(#auraCore)"/>
+          </svg>
+        </div>
+        <span class="logo-text">Aura</span>
+      </div>
+      <div class="header-actions">
+        <div class="current-color-indicator" id="currentColorIndicator" title="Current color"></div>
+      </div>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+        Colors
+      </button>
+      <button class="tab" data-tab="gradients">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18"/>
+        </svg>
+        Gradients
+      </button>
+      <button class="tab" data-tab="presets">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        Presets
+      </button>
+    </nav>
+
+    <!-- Tab Content -->
+    <main class="tab-content">
+      <!-- Colors Tab -->
+      <section class="tab-panel active" id="colorsTab">
+        <!-- Custom Color Picker -->
+        <div class="custom-picker-section">
+          <div class="section-header">
+            <h3 class="section-title">
+              <span class="section-icon">🎨</span>
+              Custom Color
+            </h3>
+          </div>
+          <div class="custom-picker">
+            <input type="color" id="customColorInput" class="color-input" value="#4ECDC4">
+            <input type="text" id="hexInput" class="hex-input" placeholder="#4ECDC4" maxlength="7">
+            <button class="apply-btn" id="applyCustomColor">Apply</button>
+          </div>
+        </div>
+
+        <!-- Favorites -->
+        <div class="favorites-section" id="favoritesSection">
+          <div class="section-header">
+            <h3 class="section-title">
+              <span class="section-icon">⭐</span>
+              Favorites
+            </h3>
+            <button class="add-favorite-btn" id="addFavoriteBtn" title="Add current color">+</button>
+          </div>
+          <div class="favorites-grid" id="favoritesGrid">
+            <!-- Favorites will be added dynamically -->
+          </div>
+        </div>
+
+        <!-- Recent Colors -->
+        <div class="history-section">
+          <h3 class="section-title">
+            <span class="section-icon">⏱️</span>
+            Recent
+          </h3>
+          <div class="history-grid" id="historyGrid">
+            <!-- History will be added dynamically -->
+          </div>
+        </div>
+
+        <!-- Color Categories -->
+        <div class="color-sections">
+          <!-- Warm Tones -->
+          <section class="color-section">
+            <h3 class="section-title">
+              <span class="section-icon">🔥</span>
+              Warm Tones
+            </h3>
+            <div class="color-grid" data-category="warm">
+              <button class="color-swatch" data-color="#FFF5F5" title="Rose White" style="--swatch-color: #FFF5F5"></button>
+              <button class="color-swatch" data-color="#FED7D7" title="Blush Pink" style="--swatch-color: #FED7D7"></button>
+              <button class="color-swatch" data-color="#FEB2B2" title="Coral Pink" style="--swatch-color: #FEB2B2"></button>
+              <button class="color-swatch" data-color="#FC8181" title="Salmon" style="--swatch-color: #FC8181"></button>
+              <button class="color-swatch" data-color="#F56565" title="Warm Red" style="--swatch-color: #F56565"></button>
+              <button class="color-swatch" data-color="#FEEBC8" title="Peach Cream" style="--swatch-color: #FEEBC8"></button>
+              <button class="color-swatch" data-color="#FBD38D" title="Mango" style="--swatch-color: #FBD38D"></button>
+              <button class="color-swatch" data-color="#F6AD55" title="Tangerine" style="--swatch-color: #F6AD55"></button>
+            </div>
+          </section>
+
+          <!-- Cool Tones -->
+          <section class="color-section">
+            <h3 class="section-title">
+              <span class="section-icon">❄️</span>
+              Cool Tones
+            </h3>
+            <div class="color-grid" data-category="cool">
+              <button class="color-swatch" data-color="#EBF8FF" title="Ice Blue" style="--swatch-color: #EBF8FF"></button>
+              <button class="color-swatch" data-color="#BEE3F8" title="Sky Blue" style="--swatch-color: #BEE3F8"></button>
+              <button class="color-swatch" data-color="#90CDF4" title="Ocean Blue" style="--swatch-color: #90CDF4"></button>
+              <button class="color-swatch" data-color="#63B3ED" title="Azure" style="--swatch-color: #63B3ED"></button>
+              <button class="color-swatch" data-color="#4299E1" title="Cobalt" style="--swatch-color: #4299E1"></button>
+              <button class="color-swatch" data-color="#E9D8FD" title="Lavender" style="--swatch-color: #E9D8FD"></button>
+              <button class="color-swatch" data-color="#D6BCFA" title="Soft Purple" style="--swatch-color: #D6BCFA"></button>
+              <button class="color-swatch" data-color="#B794F4" title="Violet" style="--swatch-color: #B794F4"></button>
+            </div>
+          </section>
+
+          <!-- Nature Tones -->
+          <section class="color-section">
+            <h3 class="section-title">
+              <span class="section-icon">🌿</span>
+              Nature Tones
+            </h3>
+            <div class="color-grid" data-category="nature">
+              <button class="color-swatch" data-color="#F0FFF4" title="Mint Cream" style="--swatch-color: #F0FFF4"></button>
+              <button class="color-swatch" data-color="#C6F6D5" title="Seafoam" style="--swatch-color: #C6F6D5"></button>
+              <button class="color-swatch" data-color="#9AE6B4" title="Mint" style="--swatch-color: #9AE6B4"></button>
+              <button class="color-swatch" data-color="#68D391" title="Spring Green" style="--swatch-color: #68D391"></button>
+              <button class="color-swatch" data-color="#48BB78" title="Emerald" style="--swatch-color: #48BB78"></button>
+              <button class="color-swatch" data-color="#E6FFFA" title="Aqua Mist" style="--swatch-color: #E6FFFA"></button>
+              <button class="color-swatch" data-color="#B2F5EA" title="Tiffany" style="--swatch-color: #B2F5EA"></button>
+              <button class="color-swatch" data-color="#81E6D9" title="Turquoise" style="--swatch-color: #81E6D9"></button>
+            </div>
+          </section>
+
+          <!-- Neutral Elegance -->
+          <section class="color-section">
+            <h3 class="section-title">
+              <span class="section-icon">✨</span>
+              Neutral Elegance
+            </h3>
+            <div class="color-grid" data-category="neutral">
+              <button class="color-swatch" data-color="#FFFAF0" title="Floral White" style="--swatch-color: #FFFAF0"></button>
+              <button class="color-swatch" data-color="#FAF5FF" title="Ghost White" style="--swatch-color: #FAF5FF"></button>
+              <button class="color-swatch" data-color="#F7FAFC" title="Snow" style="--swatch-color: #F7FAFC"></button>
+              <button class="color-swatch" data-color="#EDF2F7" title="Silver Mist" style="--swatch-color: #EDF2F7"></button>
+              <button class="color-swatch" data-color="#E2E8F0" title="Platinum" style="--swatch-color: #E2E8F0"></button>
+              <button class="color-swatch" data-color="#FFFFF0" title="Ivory" style="--swatch-color: #FFFFF0"></button>
+              <button class="color-swatch" data-color="#FEFCBF" title="Champagne" style="--swatch-color: #FEFCBF"></button>
+              <button class="color-swatch" data-color="#FAF089" title="Buttercream" style="--swatch-color: #FAF089"></button>
+            </div>
+          </section>
+
+          <!-- Dark Mode -->
+          <section class="color-section">
+            <h3 class="section-title">
+              <span class="section-icon">🌙</span>
+              Dark Mode
+            </h3>
+            <div class="color-grid" data-category="dark">
+              <button class="color-swatch dark" data-color="#1A202C" title="Midnight" style="--swatch-color: #1A202C"></button>
+              <button class="color-swatch dark" data-color="#2D3748" title="Charcoal" style="--swatch-color: #2D3748"></button>
+              <button class="color-swatch dark" data-color="#4A5568" title="Slate" style="--swatch-color: #4A5568"></button>
+              <button class="color-swatch dark" data-color="#1E3A5F" title="Navy" style="--swatch-color: #1E3A5F"></button>
+              <button class="color-swatch dark" data-color="#2C3E50" title="Blue Steel" style="--swatch-color: #2C3E50"></button>
+              <button class="color-swatch dark" data-color="#1C1C1E" title="Obsidian" style="--swatch-color: #1C1C1E"></button>
+              <button class="color-swatch dark" data-color="#2D2D30" title="Carbon" style="--swatch-color: #2D2D30"></button>
+              <button class="color-swatch dark" data-color="#3C3C3C" title="Graphite" style="--swatch-color: #3C3C3C"></button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Gradients Tab -->
+      <section class="tab-panel" id="gradientsTab">
+        <div class="gradients-grid">
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)" title="Rose Petals">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)"></span>
+            <span class="gradient-name">Rose Petals</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%)" title="Purple Dream">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%)"></span>
+            <span class="gradient-name">Purple Dream</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)" title="Sunset Glow">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)"></span>
+            <span class="gradient-name">Sunset Glow</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #667EEA 0%, #764BA2 100%)" title="Cosmic">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%)"></span>
+            <span class="gradient-name">Cosmic</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #11998E 0%, #38EF7D 100%)" title="Fresh Mint">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #11998E 0%, #38EF7D 100%)"></span>
+            <span class="gradient-name">Fresh Mint</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%)" title="Neon Burst">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%)"></span>
+            <span class="gradient-name">Neon Burst</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%)" title="Ocean Breeze">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%)"></span>
+            <span class="gradient-name">Ocean Breeze</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #F093FB 0%, #F5576C 100%)" title="Pink Heat">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%)"></span>
+            <span class="gradient-name">Pink Heat</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)" title="Arctic Blue">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)"></span>
+            <span class="gradient-name">Arctic Blue</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #43E97B 0%, #38F9D7 100%)" title="Spring Meadow">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%)"></span>
+            <span class="gradient-name">Spring Meadow</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #FA709A 0%, #FEE140 100%)" title="Peach Sunset">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%)"></span>
+            <span class="gradient-name">Peach Sunset</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #30CFD0 0%, #330867 100%)" title="Deep Space">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #30CFD0 0%, #330867 100%)"></span>
+            <span class="gradient-name">Deep Space</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #B721FF 0%, #21D4FD 100%)" title="Electric">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #B721FF 0%, #21D4FD 100%)"></span>
+            <span class="gradient-name">Electric</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)" title="Coral Reef">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)"></span>
+            <span class="gradient-name">Coral Reef</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #C471F5 0%, #FA71CD 100%)" title="Candy">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #C471F5 0%, #FA71CD 100%)"></span>
+            <span class="gradient-name">Candy</span>
+          </button>
+          <button class="gradient-swatch" data-gradient="linear-gradient(135deg, #1A2980 0%, #26D0CE 100%)" title="Northern Lights">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #1A2980 0%, #26D0CE 100%)"></span>
+            <span class="gradient-name">Northern Lights</span>
+          </button>
+          <button class="gradient-swatch dark" data-gradient="linear-gradient(135deg, #0F0C29 0%, #302B63 50%, #24243E 100%)" title="Midnight City">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #0F0C29 0%, #302B63 50%, #24243E 100%)"></span>
+            <span class="gradient-name">Midnight City</span>
+          </button>
+          <button class="gradient-swatch dark" data-gradient="linear-gradient(135deg, #232526 0%, #414345 100%)" title="Graphite">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #232526 0%, #414345 100%)"></span>
+            <span class="gradient-name">Graphite</span>
+          </button>
+          <button class="gradient-swatch dark" data-gradient="linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)" title="Deep Ocean">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)"></span>
+            <span class="gradient-name">Deep Ocean</span>
+          </button>
+          <button class="gradient-swatch dark" data-gradient="linear-gradient(135deg, #141E30 0%, #243B55 100%)" title="Royal Blue">
+            <span class="gradient-preview" style="background: linear-gradient(135deg, #141E30 0%, #243B55 100%)"></span>
+            <span class="gradient-name">Royal Blue</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Presets Tab -->
+      <section class="tab-panel" id="presetsTab">
+        <div class="presets-grid">
+          <button class="preset-card" data-preset="focus">
+            <div class="preset-icon">🎯</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Focus</h4>
+              <p class="preset-desc">Deep blue for concentration</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #141E30 0%, #243B55 100%)"></div>
+          </button>
+          <button class="preset-card" data-preset="calm">
+            <div class="preset-icon">🧘</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Calm</h4>
+              <p class="preset-desc">Soft mint for relaxation</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #C6F6D5 0%, #E6FFFA 100%)"></div>
+          </button>
+          <button class="preset-card" data-preset="energy">
+            <div class="preset-icon">⚡</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Energy</h4>
+              <p class="preset-desc">Vibrant coral for motivation</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%)"></div>
+          </button>
+          <button class="preset-card" data-preset="sunset">
+            <div class="preset-icon">🌅</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Sunset</h4>
+              <p class="preset-desc">Warm evening vibes</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)"></div>
+          </button>
+          <button class="preset-card" data-preset="midnight">
+            <div class="preset-icon">🌙</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Midnight</h4>
+              <p class="preset-desc">Dark mode for night owls</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #0F0C29 0%, #302B63 50%, #24243E 100%)"></div>
+          </button>
+          <button class="preset-card" data-preset="ocean">
+            <div class="preset-icon">🌊</div>
+            <div class="preset-info">
+              <h4 class="preset-name">Ocean</h4>
+              <p class="preset-desc">Cool waves of blue</p>
+            </div>
+            <div class="preset-preview" style="background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)"></div>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer with Settings -->
+    <footer class="footer">
+      <div class="footer-settings">
+        <label class="toggle-setting">
+          <input type="checkbox" id="particlesToggle" checked>
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">✨ Particles</span>
+        </label>
+        <label class="toggle-setting">
+          <input type="checkbox" id="weatherToggle" checked>
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">🌤️ Weather</span>
+        </label>
+      </div>
+      <button class="reset-button" id="resetButton">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C8.54124 3 5.52736 5.02379 4 8M4 8V3M4 8H9"/>
+        </svg>
+        Reset
+      </button>
+    </footer>
+
+    <!-- Success Toast -->
+    <div class="toast" id="toast">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6L9 17L4 12"/>
+      </svg>
+      <span id="toastMessage">Color applied!</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
