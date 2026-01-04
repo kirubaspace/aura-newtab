@@ -253,32 +253,24 @@ async function loadWeather() {
         return;
     }
 
-    // Get location
-    if (!navigator.geolocation) {
-        showWeatherError();
-        return;
-    }
+    // Use IP-based location (no permission needed)
+    try {
+        const locationResponse = await fetch('https://ipapi.co/json/');
+        if (!locationResponse.ok) throw new Error('Location failed');
 
-    navigator.geolocation.getCurrentPosition(
-        async (position) => {
-            try {
-                const { latitude, longitude } = position.coords;
-                const weather = await fetchWeather(latitude, longitude);
-                displayWeather(weather);
-                cacheWeather(weather);
-            } catch (error) {
-                showWeatherError();
-            }
-        },
-        () => showWeatherError(),
-        { timeout: 10000 }
-    );
+        const locationData = await locationResponse.json();
+        const weather = await fetchWeather(locationData.latitude, locationData.longitude, locationData.city);
+        displayWeather(weather);
+        cacheWeather(weather);
+    } catch (error) {
+        showWeatherError();
+    }
 }
 
 /**
  * Fetch weather from API
  */
-async function fetchWeather(lat, lon) {
+async function fetchWeather(lat, lon, cityName) {
     // Using Open-Meteo API (free, no API key required)
     const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`
@@ -288,29 +280,10 @@ async function fetchWeather(lat, lon) {
 
     const data = await response.json();
 
-    // Get location name using reverse geocoding
-    const locationResponse = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=&latitude=${lat}&longitude=${lon}&count=1`
-    );
-
-    let locationName = 'Your Location';
-    try {
-        // Simple reverse geocode alternative
-        const geoResponse = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
-        );
-        if (geoResponse.ok) {
-            const geoData = await geoResponse.json();
-            locationName = geoData.address?.city || geoData.address?.town || geoData.address?.village || 'Your Location';
-        }
-    } catch (e) {
-        // Ignore geocoding errors
-    }
-
     return {
         temp: Math.round(data.current.temperature_2m),
         code: data.current.weather_code,
-        location: locationName,
+        location: cityName || 'Your Location',
         timestamp: Date.now()
     };
 }
